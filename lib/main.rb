@@ -47,7 +47,7 @@ class Enemy < Warlord
 end
 
 def print_ascii(filename)
-  File.open(filename).readlines.each do |line|
+  File.open("../ascii_art/#{filename}").readlines.each do |line|
     puts line
   end
 end
