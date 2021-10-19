@@ -1,4 +1,3 @@
-
 puts "Heroes: A Text Based Adventure"
 
 class Warlord
@@ -28,6 +27,14 @@ class Warrior < Warlord
     puts "I am #{@name}, a fearsome warrior!"
   end
 
+  def strike(target)
+    if rand(100) > 50
+      target.health -= self.power * 1.5         #warriors receive a passive critical strike ability
+    else
+      target.health -= self.power
+    end
+  end
+
 end
 
 class Paladin < Warlord
@@ -52,6 +59,18 @@ def print_ascii(filename)
   end
 end
 
+#define round based combat
+def battle(hero, enemy)
+  while hero.health and enemy.health > 0 do
+   puts "The hero strikes!"
+   hero.strike(enemy)
+   puts "Enemy HP left: #{enemy.health}"
+   puts "The enemy retaliates!"
+   enemy.strike(hero)
+   puts "Hero HP left: #{hero.health}"
+ end
+end
+
 def game
 
 #create a hero
@@ -67,24 +86,12 @@ def game
     puts "That is not a class!"
   end
 
-#define round based combat
-  def battle(hero, enemy)
-    while hero.health and enemy.health > 0 do
-      puts "The hero strikes!"
-      hero.strike(enemy)
-      puts "Enemy HP left: #{enemy.health}"
-      puts "The enemy retaliates!"
-      enemy.strike(hero)
-      puts "Hero HP left: #{hero.health}"
-    end
-  end
-
   hero.introduction
 
-  puts "#{hero.name}, as you wander into the forest, you encounter a hungry wolf. Although malnourished
+  puts "#{hero.name}, as you wander into the forest, you encounter a hungry wolf. Although malnourished,
   the wolf strikes immediately as it notices you. Prepare for battle!"
 
-  enemy = Enemy.new("Wolf", 30, 4)
+  enemy = Enemy.new("Wolf", 100, 1)
 
   puts "Woof!"
   print_ascii('wolf_ascii.txt')
