@@ -93,7 +93,7 @@ def game
 
   enemy = Enemy.new("Wolf", 100, 1)
 
-  puts "Woof!"
+  puts "*angry wolf noises*"
   print_ascii('wolf_ascii.txt')
   battle(hero, enemy)
 end
