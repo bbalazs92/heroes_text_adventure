@@ -41,7 +41,6 @@ end
 
 #hero creation
 def create_hero
-=begin
   puts "Choose your class: Warrior or Paladin!"
   hero_class = gets.chomp
   if hero_class == "warrior"
@@ -49,12 +48,10 @@ def create_hero
     hero = Warrior.new(gets.chomp, 100, 8)        #initial hp and dmg done set here
   elsif hero_class == "paladin"
     puts "What is your name paladin?"
-    hero = Paladin.new(gets.chomp, 100, 8)
+    hero = Paladin.new(gets.chomp, 100, 8, ["strike", "heal"])
   else
     puts "That is not a class!"
   end
-=end
-  hero = Paladin.new("Uther", 100, 8, ["strike", "heal"])
   return hero
 end
 
@@ -98,7 +95,7 @@ def game
   puts "#{hero.name}, as you wander into the forest, you encounter a hungry wolf. Although malnourished,
   the wolf strikes immediately as it notices you. Prepare for battle!"
 
-  enemy = Enemy.new("wolf", 50, 4)
+  enemy = Enemy.new("wolf", 10, 4)
 
   puts "*angry wolf noises*"
   print_ascii('wolf_ascii.txt')
