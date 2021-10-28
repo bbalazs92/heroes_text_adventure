@@ -5,12 +5,13 @@ class Warlord
   include Skills
 
   attr_reader :name, :power
-  attr_accessor :health
+  attr_accessor :health, :abilities
 
-  def initialize(name, health, power)
+  def initialize(name, health, power, abilities=["strike"])
     @name = name
     @health = health
     @power = power
+    @abilities = abilities
   end
 
   def introduction
@@ -21,28 +22,17 @@ end
 
 class Warrior < Warlord
 
-  def battle_shout
-    puts "I am #{@name}, a fearsome warrior!"
-  end
-
 end
 
 class Paladin < Warlord
-
-  def snarky_comment
-    puts "You stand before #{@name}, Light's most powerful knight!"
-  end
 
 end
 
 class Enemy < Warlord
 
-  def threaten
-    puts "I will be your undoing!"
-  end
-
 end
 
+#method to print out ascii art
 def print_ascii(filename)
   File.open("../ascii_art/#{filename}").readlines.each do |line|
     puts line
@@ -51,28 +41,31 @@ end
 
 #hero creation
 def create_hero
+=begin
   puts "Choose your class: Warrior or Paladin!"
   hero_class = gets.chomp
   if hero_class == "warrior"
     puts "What is your name warrior?"
-    hero = Warrior.new(gets.chomp, 100, 8)
+    hero = Warrior.new(gets.chomp, 100, 8)        #initial hp and dmg done set here
   elsif hero_class == "paladin"
     puts "What is your name paladin?"
     hero = Paladin.new(gets.chomp, 100, 8)
   else
     puts "That is not a class!"
   end
+=end
+  hero = Paladin.new("Uther", 100, 8)
   return hero
 end
 
-#define round based combat
+#round based combat
 def battle(hero, enemy)
   while hero.health and enemy.health > 0 do
     puts "The hero strikes!"
     hero.strike(enemy)
     puts "Enemy HP left: #{enemy.health}"
-    if enemy.health <= 0                      #so that enemy cannot strike back if it's hp drops
-        puts "You defeated #{enemy.name}!"    #below 0
+    if enemy.health <= 0                      #enemy cannot strike back if it's hp drops below 0
+        puts "You defeated #{enemy.name}!"
         break
     end
     puts "The enemy retaliates!"
@@ -91,11 +84,12 @@ def game
   puts "#{hero.name}, as you wander into the forest, you encounter a hungry wolf. Although malnourished,
   the wolf strikes immediately as it notices you. Prepare for battle!"
 
-  enemy = Enemy.new("Wolf", 20, 1)
+  enemy = Enemy.new("wolf", 20, 1)
 
   puts "*angry wolf noises*"
   print_ascii('wolf_ascii.txt')
   battle(hero, enemy)
+  p hero.abilities
 end
 
 game
