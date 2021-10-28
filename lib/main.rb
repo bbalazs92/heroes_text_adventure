@@ -54,19 +54,33 @@ def create_hero
     puts "That is not a class!"
   end
 =end
-  hero = Paladin.new("Uther", 100, 8)
+  hero = Paladin.new("Uther", 100, 8, ["strike", "heal"])
   return hero
 end
 
 #round based combat
 def battle(hero, enemy)
+  round_counter = 0
   while hero.health and enemy.health > 0 do
-    puts "The hero strikes!"
-    hero.strike(enemy)
-    puts "Enemy HP left: #{enemy.health}"
-    if enemy.health <= 0                      #enemy cannot strike back if it's hp drops below 0
-        puts "You defeated #{enemy.name}!"
-        break
+    round_counter += 1
+    puts "Round: #{round_counter}"
+    puts "What is your next action? Your abilities: " + "#{hero.abilities}."
+    user_input = gets.chomp
+    while !hero.abilities.include?(user_input)
+      puts "That is not a valid input."
+      user_input = gets.chomp
+    end
+    puts "The hero uses #{user_input}!"
+    if user_input == "strike"
+      hero.strike(enemy)
+      puts "Enemy HP left: #{enemy.health}"
+      if enemy.health <= 0                      #enemy cannot strike back if it's hp drops below 0
+          puts "You defeated #{enemy.name}!"
+          break
+      end
+    elsif user_input == "heal"
+      hero.heal
+      puts "Hero HP left: #{hero.health}"
     end
     puts "The enemy retaliates!"
     enemy.strike(hero)
@@ -84,12 +98,11 @@ def game
   puts "#{hero.name}, as you wander into the forest, you encounter a hungry wolf. Although malnourished,
   the wolf strikes immediately as it notices you. Prepare for battle!"
 
-  enemy = Enemy.new("wolf", 20, 1)
+  enemy = Enemy.new("wolf", 50, 4)
 
   puts "*angry wolf noises*"
   print_ascii('wolf_ascii.txt')
   battle(hero, enemy)
-  p hero.abilities
 end
 
 game
