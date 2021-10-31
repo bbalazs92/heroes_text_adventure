@@ -103,3 +103,5 @@ def game
 end
 
 game
+#create a map and add travel commands
+#add an inventory
