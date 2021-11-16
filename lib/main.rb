@@ -81,6 +81,7 @@ def battle(hero, enemy)
     end
     puts "The enemy retaliates!"
     enemy.strike(hero)
+    sleep 1
     puts "Hero HP left: #{hero.health}"
  end
 end
